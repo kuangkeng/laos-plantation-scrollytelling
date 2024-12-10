@@ -141,7 +141,6 @@ ul {
        </svg>       
     </div>
     <div class="imagebox">
-      <div class="credit">Photo: <span id="credit_name">Jessica Buckingham</span></div>
     </div>
     <div id="map-texts">
       <div class="container">
@@ -196,7 +195,6 @@ new Waypoint({
   handler: direction => {
     if (direction === 'down') {
       $('.scroll-logo').fadeOut(1000);
-      $('.credit').fadeIn(1000);
     } else {}
   },
   offset: '60%',
@@ -223,7 +221,7 @@ new Waypoint({
   handler: direction => {
     if (direction === 'down') {
       $('.imagebox').fadeTo(300, 0, function() {
-        $(this).css('background-image', 'url("./img/t3.jpg")').fadeTo(300, 1);
+        $(this).css('background-image', 'url("./img/t1.jpg")').fadeTo(300, 1);
       });
     } else {
       $('.imagebox').fadeTo(300, 0, function() {
@@ -243,7 +241,7 @@ new Waypoint({
       });
     } else {
       $('.imagebox').fadeTo(300, 0, function() {
-        $(this).css('background-image', 'url("./img/t3.jpg")').fadeTo(300, 1);
+        $(this).css('background-image', 'url("./img/t1.jpg")').fadeTo(300, 1);
       });
     }
   },
