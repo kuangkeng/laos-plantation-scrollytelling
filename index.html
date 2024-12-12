@@ -8,6 +8,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.0/leaflet.css"/>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.0/leaflet.js"></script>
+    <script src='https://api.mapbox.com/mapbox.js/v3.3.1/mapbox.js'></script>
+    <link href='https://api.mapbox.com/mapbox.js/v3.3.1/mapbox.css' rel='stylesheet' />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/noframework.waypoints.js"></script>
   </head>
 
@@ -52,10 +56,27 @@ body {
 .flash2 {
   animation: blink2 1.2s infinite;
 }
+.mapbox { 
+  height: 700px; 
+  width: 100%;
+  max-width: 1000px;
+  position: fixed;
+  top:0px;
+  margin: auto 0px;
+  z-index: 0 !important;
+  left: 50%;
+  transform: translate(-50%);
+}
+
+.max_width {
+  max-width: 1000px;
+  left: 50%;
+  transform: translate(-50%);
+}
 
 .imagebox { 
-  background-image: url("./img/t1.jpg");
-  height: 750px; 
+  background-image: url("");
+  height: 700px; 
   width: 100%;
   /* max-width: 800px; */
   margin: 0 auto;
@@ -71,6 +92,49 @@ body {
   -webkit-background-size:cover;
   -moz-background-size:cover;
   -o-background-size:cover;
+  display: none;
+}
+
+.leaflet-bottom {
+	bottom: 1rem;
+}
+.leaflet-right {
+	right: 1rem;
+}
+.leaflet-tooltip-top:before, 
+.leaflet-tooltip-bottom:before, 
+.leaflet-tooltip-left:before, 
+.leaflet-tooltip-right:before {
+    border: none !important;
+}
+.leaflet-tooltip{
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 14px;
+  text-align: center;
+	color: #ffffff;
+  text-shadow: 2px 2px 1px rgba(0,0,0,0.2);
+  background-color: rgba(0,0,0,0) !important;
+  border:none !important;
+  box-shadow: none !important;
+}
+.locationLabel {
+  font-size: 16px;
+  text-shadow: 2px 2px 1px rgba(0,0,0,0.2);
+}
+.countryLabel {
+  font-size: 16px;
+  font-weight: 400;
+  text-shadow: none;
+}
+.leaflet-tooltip-pane {
+  z-index: 666;
+}
+.custom-marker {
+  width: 10px;
+  height: 10px;
+  background-color: yellow;
+  border-radius: 0; /* No rounding to keep it square */
 }
 
 .container {
@@ -91,17 +155,16 @@ body {
   max-width: 600px;
   margin:0 auto;
   background: rgba(0,0,0,.6);
-  margin-bottom: 600px !important;
-  
+  margin-bottom: 700px !important;
 }
 
-#t8{
-  margin-bottom: 5% !important;
-}
-
-#tfirst, #tlast, #t1, #t4, #t5, #t6, #t8 {
+#tfirst, #tlast {
   border: 0px;
   background: rgba(255,255,255,0);
+}
+
+#t11{
+    margin-bottom: 350px !important;
 }
 
 ul {
@@ -121,8 +184,10 @@ ul {
     padding-left: 10px;
     padding-right: 10px;
   }
-  #t8{
-    margin-bottom: 55% !important;
+  .leaflet-tooltip{
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 14px;
   }
 
 }
@@ -140,36 +205,45 @@ ul {
         </g>
        </svg>       
     </div>
-    <div class="imagebox">
-    </div>
+    <div class="imagebox"></div>
+    <div class="mapbox" id="map-container" ></div>
     <div id="map-texts">
       <div class="container">
         <ul>
           <li id="tfirst" class="scroll-text">
           </li>
           <li id="t1" class="scroll-text">
-            
+            <p>As the popularity of durians surges in China, many Chinese entrepreneurs are following the trend by expanding durian plantations in Laos. Vietnamese investors are also capitalizing on this opportunity, leveraging their geographic proximity to Laos to establish their own plantations.</p>
           </li>
           <li id="t2" class="scroll-text">
-            <p>Planet Labs’ satellite imagery, Mekong Eye and Rainforest Investigations Network (RIN) discovered various Chinese-and Vietnamese-owned plantations on deforested land, and compared them with on-the-ground observations, local testimonials, social media posts, and public documents.</p> 
+            <p>Based on Planet Labs’ satellite imagery, Mekong Eye and Rainforest Investigations Network (RIN) discovered various Chinese-and Vietnamese-owned plantations on deforested land, and compared them with on-the-ground observations, local testimonials, social media posts, and public documents.</p> 
           </li>
           <li id="t3" class="scroll-text">
-            <p>Many of these plantations are nestled near southern Laos’s biodiverse primary forests, including Dong Hua Sao and Xe Pian—two of the country’s most important National Biodiversity Conservation Areas and <a href="https://wwfasia.awsassets.panda.org/downloads/wwf-laos-fy24-annual-report_1.pdf" target="_blank">key parts</a> of a global eco-region—which already face threats from logging and cassava farming.</p>
+            <p>something about Jinyao</p>
           </li>
           <li id="t4" class="scroll-text">
-            
+            <p>something about Jianda</p>
           </li>
           <li id="t5" class="scroll-text">
-           
+            <p>something about Thaco</p>
           </li>
           <li id="t6" class="scroll-text">
-            
+            <p>something about Hoang Anh Gia Lai</p>
           </li>
           <li id="t7" class="scroll-text">
-            <p>Most of the owners began their businesses in the area by producing bananas, with durian being a more recent addition.</p> 
+            <p>Many of these plantations are nestled near southern Laos’s biodiverse primary forests, including Dong Hua Sao and Xe Pian—two of the country’s most important National Biodiversity Conservation Areas and <a href="https://wwfasia.awsassets.panda.org/downloads/wwf-laos-fy24-annual-report_1.pdf" target="_blank">key parts</a> of a global eco-region—which already face threats from logging and cassava farming.</p>            
           </li>
           <li id="t8" class="scroll-text">
-            
+            <p>The conversion from forest to farmland typically begins with cassava planted as a cover crop, followed by banana plantations, then a longer term investment in durian.</p> 
+          </li>
+          <li id="t9" class="scroll-text">
+            <p>Most of the owners began their businesses in the area by producing bananas, with durian being a more recent addition.</p>
+          </li>
+          <li id="t10" class="scroll-text">
+            <p>A durian seedling nursery on a durian plantation belonging to Chinese company Kang Long, in Attapeu province, Laos, August 2024.</p>
+          </li>
+          <li id="t11" class="scroll-text">
+            <p>In anticipation of future demand, and to secure a cheap source of imported fruit, Chinese companies have begun planting durian plantations all over Laos, which will begin bearing fruit in a few years.</p>
           </li>
           <li id="tlast" class="scroll-text"></li>
         </ul> 
@@ -186,6 +260,102 @@ if(window.innerWidth>500){
   img_t2="url('./img/t2m.jpg')";
   img_t8="url('./img/t8m.jpg')";
 }
+
+var defaultZoom;
+const incidentZoom = 16,
+  endZoom = 5,
+  defaultCoor = [18.340,102.580];
+
+if(window.innerWidth>500){
+  defaultZoom = 6;
+} else if(window.innerWidth<500){
+  defaultZoom = 5;
+}
+L.mapbox.accessToken = 'pk.eyJ1Ijoia3VhbmdrZW5nIiwiYSI6ImNsdmRzN3JwMTAyaXgya280enl6aTRnNzcifQ.D5uI7mO8fgbujPL9SVGfxQ';
+
+var mymap = L.map('map-container',{
+  zoomControl:false, 
+  scrollWheelZoom:false, 
+  dragging:false, 
+  zoomSnap:0.1,
+  doubleClickZoom: false,
+  maxZoom:17,
+  minZoom:1,
+}).setView(defaultCoor, defaultZoom);
+
+L.tileLayer(
+    'https://api.mapbox.com/styles/v1/kuangkeng/cltsbxqmz002l01qsbya83ov7/tiles/256/{z}/{x}/{y}@2x?access_token=' + L.mapbox.accessToken, {
+        tileSize: 512,
+        maxZoom:20,
+        zoomOffset: -1,
+        attribution: '© <a href="https://www.mapbox.com/contribute/">Mapbox</a>'
+    }).addTo(mymap);
+
+// const redIcon = L.icon.pulse({
+//   iconSize: [10, 10],
+//   color: 'rgba(244, 67, 54, 1)',
+// });
+
+const 
+  flyTime = 1,
+  t1coor = defaultCoor,
+  t3coor = [14.756, 106.189],
+  t4coor = [14.929, 106.466],
+  t5coor = [14.668, 106.662],
+  t6coor = [14.797, 107.126],
+  t7coor = [14.797, 107.126],
+  laoscoor = [19.758,103.2],
+  vietnamcoor = [21.5,106],
+  thailandcoor = [15.731, 100.936],
+  myanmarcoor = [21.496, 96.477],
+  cambodiacoor = [12.782, 106.5],
+  vientianecoor = [17.999, 102.632],
+  chinacoor = [23.4,103.2],
+  greySquareIcon = L.divIcon({
+    className: 'custom-marker', // Custom class for styling
+    html: '', // Empty content
+    iconSize: [10, 10], // Size of the square
+    iconAnchor: [5, 5] // Anchor point (center of the square)
+  }),
+  laoslabel = L.tooltip({
+    className: 'countryLabel'})
+    .setLatLng(laoscoor)
+    .setContent('LAOS')
+    .addTo(mymap),
+  vietnamlabel = L.tooltip({
+    className: 'countryLabel'})
+    .setLatLng(vietnamcoor)
+    .setContent('VIETNAM')
+    .addTo(mymap),
+  thailandlabel = L.tooltip({
+    className: 'countryLabel'})
+    .setLatLng(thailandcoor)
+    .setContent('THAILAND')
+    .addTo(mymap),
+  myanmarlabel = L.tooltip({
+    className: 'countryLabel'})
+    .setLatLng(myanmarcoor)
+    .setContent('MYANMAR')
+    .addTo(mymap),
+  cambodialabel = L.tooltip({
+    className: 'countryLabel'})
+    .setLatLng(cambodiacoor)
+    .setContent('CAMBODIA')
+    .addTo(mymap),
+  chinalabel = L.tooltip({
+    className: 'countryLabel'})
+    .setLatLng(chinacoor)
+    .setContent('CHINA')
+    .addTo(mymap),    
+  vientianelabel = L.tooltip({
+    className: 'countryLabel'})
+    .setLatLng(vientianecoor)
+    .setContent('Vientiane')
+    .addTo(mymap),
+  vientianeMarker = L.marker(vientianecoor, {
+    icon: greySquareIcon,
+  }).addTo(mymap);
+
 
 //waypoint transition
 const offsetVal = '80%';
@@ -208,8 +378,8 @@ new Waypoint({
         $(this).css('background-image', img_t2).fadeTo(300, 1);
       });
     } else {
-      $('.imagebox').fadeTo(300, 0, function() {
-        $(this).css('background-image', 'url("./img/t1.jpg")').fadeTo(300, 1);
+      $('.imagebox').fadeOut(300, function() {
+        $(this).css('background-image', 'url("")');
       });
     }
   },
@@ -220,10 +390,18 @@ new Waypoint({
   element: document.getElementById('t3'),
   handler: direction => {
     if (direction === 'down') {
-      $('.imagebox').fadeTo(300, 0, function() {
-        $(this).css('background-image', 'url("./img/t1.jpg")').fadeTo(300, 1);
+      $('.imagebox').fadeOut(300, function() {
+        $(this).css('background-image', 'url("")');
       });
+      setTimeout(function() {
+        mymap.flyTo(t3coor, incidentZoom, {
+        duration: flyTime
+      });
+      }, 1000);
     } else {
+      mymap.flyTo(t1coor, defaultZoom, {
+        duration: flyTime
+      });
       $('.imagebox').fadeTo(300, 0, function() {
         $(this).css('background-image', img_t2).fadeTo(300, 1);
       });
@@ -236,12 +414,12 @@ new Waypoint({
   element: document.getElementById('t4'),
   handler: direction => {
     if (direction === 'down') {
-      $('.imagebox').fadeTo(300, 0, function() {
-        $(this).css('background-image', 'url("./img/t4.jpg")').fadeTo(300, 1);
+      mymap.flyTo(t4coor, incidentZoom, {
+        duration: flyTime
       });
     } else {
-      $('.imagebox').fadeTo(300, 0, function() {
-        $(this).css('background-image', 'url("./img/t1.jpg")').fadeTo(300, 1);
+      mymap.flyTo(t3coor, incidentZoom, {
+        duration: flyTime
       });
     }
   },
@@ -252,12 +430,12 @@ new Waypoint({
   element: document.getElementById('t5'),
   handler: direction => {
     if (direction === 'down') {
-      $('.imagebox').fadeTo(300, 0, function() {
-        $(this).css('background-image', 'url("./img/t5.jpg")').fadeTo(300, 1);
+      mymap.flyTo(t5coor, incidentZoom, {
+        duration: flyTime
       });
     } else {
-      $('.imagebox').fadeTo(300, 0, function() {
-        $(this).css('background-image', 'url("./img/t4.jpg")').fadeTo(300, 1);
+      mymap.flyTo(t4coor, incidentZoom, {
+        duration: flyTime
       });
     }
   },
@@ -268,13 +446,12 @@ new Waypoint({
   element: document.getElementById('t6'),
   handler: direction => {
     if (direction === 'down') {
-      $('.imagebox').fadeTo(300, 0, function() {
-        // $(this).css('background-image', img_t6).fadeTo(300, 1);
-        $(this).css('background-image', 'url("./img/t6.jpg")').fadeTo(300, 1);
+      mymap.flyTo(t6coor, incidentZoom, {
+        duration: flyTime
       });
     } else {
-      $('.imagebox').fadeTo(300, 0, function() {
-        $(this).css('background-image', 'url("./img/t5.jpg")').fadeTo(300, 1);
+      mymap.flyTo(t5coor, incidentZoom, {
+        duration: flyTime
       });
     }
   },
@@ -285,13 +462,18 @@ new Waypoint({
   element: document.getElementById('t7'),
   handler: direction => {
     if (direction === 'down') {
+      
       $('.imagebox').fadeTo(300, 0, function() {
+        $('.imagebox').addClass('max_width');
         $(this).css('background-image', 'url("./img/t7.jpg")').fadeTo(300, 1);
       });
+      $('.mapbox').fadeOut(300);
     } else {
-      $('.imagebox').fadeTo(300, 0, function() {
-        $(this).css('background-image', 'url("./img/t6.jpg")').fadeTo(300, 1);
+      $('.imagebox').fadeOut(300, function() {
+        $('.imagebox').removeClass('max_width');
+        $(this).css('background-image', 'url("")');
       });
+      $('.mapbox').fadeIn(300);
     }
   },
   offset: offsetVal,
@@ -302,16 +484,67 @@ new Waypoint({
   handler: direction => {
     if (direction === 'down') {
       $('.imagebox').fadeTo(300, 0, function() {
+        $('.imagebox').removeClass('max_width');
         $(this).css('background-image', 'url("./img/t8.jpg")').fadeTo(300, 1);
       });
     } else {
+      
       $('.imagebox').fadeTo(300, 0, function() {
+        $('.imagebox').addClass('max_width');
         $(this).css('background-image', 'url("./img/t7.jpg")').fadeTo(300, 1);
       });
     }
   },
   offset: offsetVal,
 });
+
+new Waypoint({
+  element: document.getElementById('t9'),
+  handler: direction => {
+    if (direction === 'down') {
+      $('.imagebox').fadeTo(300, 0, function() {
+        $(this).css('background-image', 'url("./img/t9.jpg")').fadeTo(300, 1);
+      });
+    } else {
+      $('.imagebox').fadeTo(300, 0, function() {
+        $(this).css('background-image', 'url("./img/t8.jpg")').fadeTo(300, 1);
+      });
+    }
+  },
+  offset: offsetVal,
+});
+
+new Waypoint({
+  element: document.getElementById('t10'),
+  handler: direction => {
+    if (direction === 'down') {
+      $('.imagebox').fadeTo(300, 0, function() {
+        $(this).css('background-image', 'url("./img/t10.jpg")').fadeTo(300, 1);
+      });
+    } else {
+      $('.imagebox').fadeTo(300, 0, function() {
+        $(this).css('background-image', 'url("./img/t9.jpg")').fadeTo(300, 1);
+      });
+    }
+  },
+  offset: offsetVal,
+});
+
+// new Waypoint({
+//   element: document.getElementById('t11'),
+//   handler: direction => {
+//     if (direction === 'down') {
+//       $('.imagebox').fadeTo(300, 0, function() {
+//         $(this).css('background-image', 'url("./img/t11.jpg")').fadeTo(300, 1);
+//       });
+//     } else {
+//       $('.imagebox').fadeTo(300, 0, function() {
+//         $(this).css('background-image', 'url("./img/t10.jpg")').fadeTo(300, 1);
+//       });
+//     }
+//   },
+//   offset: offsetVal,
+// });
 
 </script>
 </body>
