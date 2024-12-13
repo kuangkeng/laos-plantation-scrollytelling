@@ -32,11 +32,11 @@ body {
   /* max-width: 800px; */
   position: relative;
   margin: 0 auto;
-  height: 600px;
+  height: 700px;
 }
 .scroll-logo {
   position:fixed;
-  top:200px;
+  top:150px;
   left:50%;
   width:80px;
   height:80px;
@@ -79,9 +79,30 @@ body {
   height: 700px; 
   width: 100%;
   /* max-width: 800px; */
-  margin: 0 auto;
   position: fixed;
   top:0px;
+  margin: auto 0px;
+  z-index: 100 !important;
+  background-color: rgba(0,0,0,0.9);
+  background-size: cover;
+  /* background-size: 100% 100%; */
+  background-position: center center;
+  background-repeat:no-repeat;
+  -webkit-background-size:cover;
+  -moz-background-size:cover;
+  -o-background-size:cover;
+  display: none;
+}
+
+.imagebox2 { 
+  background-image: url("");
+  height: 700px; 
+  width: 100%;
+  max-width: 1000px;
+  position: fixed;
+  top:0px;
+  left: 50%;
+  transform: translate(-50%);
   margin: auto 0px;
   z-index: 100 !important;
   background-color: rgba(0,0,0,0.9);
@@ -206,6 +227,7 @@ ul {
        </svg>       
     </div>
     <div class="imagebox"></div>
+    <div class="imagebox2"></div>
     <div class="mapbox" id="map-container" ></div>
     <div id="map-texts">
       <div class="container">
@@ -219,19 +241,23 @@ ul {
             <p>Based on Planet Labs’ satellite imagery, Mekong Eye and Rainforest Investigations Network (RIN) discovered various Chinese-and Vietnamese-owned plantations on deforested land, and compared them with on-the-ground observations, local testimonials, social media posts, and public documents.</p> 
           </li>
           <li id="t3" class="scroll-text">
-            <p>something about Jinyao</p>
+            <p>Satellite image of Jin Yao plantation in Sanamxay district, Attapeu province, December 2024.</p>
           </li>
           <li id="t4" class="scroll-text">
-            <p>something about Jianda</p>
+            <p>Satellite image of Jianda plantation in Sanamxay district Attapeu province, December 2024.</p>
           </li>
           <li id="t5" class="scroll-text">
-            <p>something about Thaco</p>
+            <p>Satellite image of Thaco plantation in Phouvong district, Attapeu province, December 2024.</p>
           </li>
           <li id="t6" class="scroll-text">
-            <p>something about Hoang Anh Gia Lai</p>
+            <p>Satellite image of Hoang Anh Gia Lai plantation in Saysettha district, Attapeu province, December 2024.</p>
           </li>
           <li id="t7" class="scroll-text">
-            <p>Many of these plantations are nestled near southern Laos’s biodiverse primary forests, including Dong Hua Sao and Xe Pian—two of the country’s most important National Biodiversity Conservation Areas and <a href="https://wwfasia.awsassets.panda.org/downloads/wwf-laos-fy24-annual-report_1.pdf" target="_blank">key parts</a> of a global eco-region—which already face threats from logging and cassava farming.</p>            
+            <p>Many of these plantations 
+              <svg width="12" height="12" xmlns="http://www.w3.org/2000/svg">
+                <rect width="12" height="12" fill="red" />
+              </svg> 
+              are nestled near southern Laos’s biodiverse primary forests, including Dong Hua Sao and Xe Pian—two of the country’s most important National Biodiversity Conservation Areas and key parts of a global eco-region—which already face threats from logging and cassava farming.</p>            
           </li>
           <li id="t8" class="scroll-text">
             <p>The conversion from forest to farmland typically begins with cassava planted as a cover crop, followed by banana plantations, then a longer term investment in durian.</p> 
@@ -255,14 +281,14 @@ ul {
 
 if(window.innerWidth>500){
   img_t2="url('./img/t2d.jpg')";
-  img_t8="url('./img/t8d.jpg')";
+  img_t7="url('./img/t7d.jpg')";
 } else if(window.innerWidth<500){
   img_t2="url('./img/t2m.jpg')";
-  img_t8="url('./img/t8m.jpg')";
+  img_t7="url('./img/t7m.jpg')";
 }
 
 var defaultZoom;
-const incidentZoom = 16,
+const incidentZoom = 15,
   endZoom = 5,
   defaultCoor = [18.340,102.580];
 
@@ -297,18 +323,22 @@ L.tileLayer(
 // });
 
 const 
-  flyTime = 1,
+  flyTime = 2,
+  t3Zoom = 14.4,
+  t4Zoom = 15,
+  t5Zoom = 15,
+  t6Zoom = 14.7,
   t1coor = defaultCoor,
   t3coor = [14.756, 106.189],
-  t4coor = [14.929, 106.466],
+  t4coor = [14.926, 106.452],
   t5coor = [14.668, 106.662],
   t6coor = [14.797, 107.126],
   t7coor = [14.797, 107.126],
-  laoscoor = [19.758,103.2],
-  vietnamcoor = [21.5,106],
+  laoscoor = [19.758,103.8],
+  vietnamcoor = [21.5,106.5],
   thailandcoor = [15.731, 100.936],
-  myanmarcoor = [21.496, 96.477],
-  cambodiacoor = [12.782, 106.5],
+  myanmarcoor = [21.496, 96],
+  cambodiacoor = [12.782, 107],
   vientianecoor = [17.999, 102.632],
   chinacoor = [23.4,103.2],
   greySquareIcon = L.divIcon({
@@ -394,16 +424,24 @@ new Waypoint({
         $(this).css('background-image', 'url("")');
       });
       setTimeout(function() {
-        mymap.flyTo(t3coor, incidentZoom, {
+        mymap.flyTo(t3coor, t3Zoom, {
         duration: flyTime
       });
       }, 1000);
+      setTimeout(function() {
+        $('.imagebox2').fadeIn(300, function() {
+          $(this).css('background-image', 'url("./img/t4.jpg")');
+        });
+      }, 3000);
     } else {
       mymap.flyTo(t1coor, defaultZoom, {
         duration: flyTime
       });
       $('.imagebox').fadeTo(300, 0, function() {
         $(this).css('background-image', img_t2).fadeTo(300, 1);
+      });
+      $('.imagebox2').fadeOut(300, function() {
+        $(this).css('background-image', 'url("")');
       });
     }
   },
@@ -414,13 +452,29 @@ new Waypoint({
   element: document.getElementById('t4'),
   handler: direction => {
     if (direction === 'down') {
-      mymap.flyTo(t4coor, incidentZoom, {
+      $('.imagebox2').fadeOut(300, function() {
+        $(this).css('background-image', 'url("")');
+      });
+      mymap.flyTo(t4coor, t4Zoom, {
         duration: flyTime
       });
+      setTimeout(function() {
+        $('.imagebox2').fadeIn(300, function() {
+          $(this).css('background-image', 'url("./img/t4.jpg")');
+        });
+      }, 2000);
     } else {
-      mymap.flyTo(t3coor, incidentZoom, {
+      mymap.flyTo(t3coor, t3Zoom, {
         duration: flyTime
       });
+      $('.imagebox2').fadeOut(300, function() {
+        $(this).css('background-image', 'url("")');
+      });
+      setTimeout(function() {
+        $('.imagebox2').fadeIn(300, function() {
+          $(this).css('background-image', 'url("./img/t3.jpg")');
+        });
+      }, 2000);
     }
   },
   offset: offsetVal,
@@ -430,13 +484,29 @@ new Waypoint({
   element: document.getElementById('t5'),
   handler: direction => {
     if (direction === 'down') {
-      mymap.flyTo(t5coor, incidentZoom, {
+      $('.imagebox2').fadeOut(300, function() {
+        $(this).css('background-image', 'url("")');
+      });
+      mymap.flyTo(t5coor, t5Zoom, {
         duration: flyTime
       });
+      setTimeout(function() {
+        $('.imagebox2').fadeIn(300, function() {
+          $(this).css('background-image', 'url("./img/t5.jpg")');
+        });
+      }, 2000);
     } else {
-      mymap.flyTo(t4coor, incidentZoom, {
+      mymap.flyTo(t4coor, t4Zoom, {
         duration: flyTime
       });
+      $('.imagebox2').fadeOut(300, function() {
+        $(this).css('background-image', 'url("")');
+      });
+      setTimeout(function() {
+        $('.imagebox2').fadeIn(300, function() {
+          $(this).css('background-image', 'url("./img/t4.jpg")');
+        });
+      }, 2000);
     }
   },
   offset: offsetVal,
@@ -446,13 +516,29 @@ new Waypoint({
   element: document.getElementById('t6'),
   handler: direction => {
     if (direction === 'down') {
-      mymap.flyTo(t6coor, incidentZoom, {
+      $('.imagebox2').fadeOut(300, function() {
+        $(this).css('background-image', 'url("")');
+      });
+      mymap.flyTo(t6coor, t6Zoom, {
         duration: flyTime
       });
+      setTimeout(function() {
+        $('.imagebox2').fadeIn(300, function() {
+          $(this).css('background-image', 'url("./img/t6.jpg")');
+        });
+      }, 2000);
     } else {
-      mymap.flyTo(t5coor, incidentZoom, {
+      mymap.flyTo(t5coor, t5Zoom, {
         duration: flyTime
       });
+      $('.imagebox2').fadeOut(300, function() {
+        $(this).css('background-image', 'url("")');
+      });
+      setTimeout(function() {
+        $('.imagebox2').fadeIn(300, function() {
+          $(this).css('background-image', 'url("./img/t5.jpg")');
+        });
+      }, 2000);
     }
   },
   offset: offsetVal,
@@ -462,10 +548,10 @@ new Waypoint({
   element: document.getElementById('t7'),
   handler: direction => {
     if (direction === 'down') {
-      
+      $('.imagebox2').fadeOut(300);
       $('.imagebox').fadeTo(300, 0, function() {
         $('.imagebox').addClass('max_width');
-        $(this).css('background-image', 'url("./img/t7.jpg")').fadeTo(300, 1);
+        $(this).css('background-image', img_t7).fadeTo(300, 1);
       });
       $('.mapbox').fadeOut(300);
     } else {
@@ -474,6 +560,7 @@ new Waypoint({
         $(this).css('background-image', 'url("")');
       });
       $('.mapbox').fadeIn(300);
+      $('.imagebox2').fadeIn(300);
     }
   },
   offset: offsetVal,
@@ -491,7 +578,7 @@ new Waypoint({
       
       $('.imagebox').fadeTo(300, 0, function() {
         $('.imagebox').addClass('max_width');
-        $(this).css('background-image', 'url("./img/t7.jpg")').fadeTo(300, 1);
+        $(this).css('background-image', img_t7).fadeTo(300, 1);
       });
     }
   },
@@ -530,21 +617,21 @@ new Waypoint({
   offset: offsetVal,
 });
 
-// new Waypoint({
-//   element: document.getElementById('t11'),
-//   handler: direction => {
-//     if (direction === 'down') {
-//       $('.imagebox').fadeTo(300, 0, function() {
-//         $(this).css('background-image', 'url("./img/t11.jpg")').fadeTo(300, 1);
-//       });
-//     } else {
-//       $('.imagebox').fadeTo(300, 0, function() {
-//         $(this).css('background-image', 'url("./img/t10.jpg")').fadeTo(300, 1);
-//       });
-//     }
-//   },
-//   offset: offsetVal,
-// });
+new Waypoint({
+  element: document.getElementById('t11'),
+  handler: direction => {
+    if (direction === 'down') {
+      $('.imagebox').fadeTo(300, 0, function() {
+        $(this).css('background-image', 'url("./img/t11.jpg")').fadeTo(300, 1);
+      });
+    } else {
+      $('.imagebox').fadeTo(300, 0, function() {
+        $(this).css('background-image', 'url("./img/t10.jpg")').fadeTo(300, 1);
+      });
+    }
+  },
+  offset: offsetVal,
+});
 
 </script>
 </body>
