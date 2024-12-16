@@ -389,26 +389,48 @@ const
 
 //waypoint transition
 const offsetVal = '80%';
+let activeWaypoint = null; // Track the active waypoint
+let timeout1 = null, timeout2 = null, timeout3 = null; // Timeout IDs for delayed actions
 
+// Function to clear all timeouts
+function clearAllTimeouts() {
+  clearTimeout(timeout1);
+  clearTimeout(timeout2);
+  clearTimeout(timeout3);
+}
+
+// Waypoint for t1
 new Waypoint({
   element: document.getElementById('t1'),
   handler: direction => {
+    activeWaypoint = 't1'; // Set active waypoint
+    clearAllTimeouts(); // Clear timeouts from other waypoints
+
     if (direction === 'down') {
       $('.scroll-logo').fadeOut(1000);
-    } else {}
+    } else {
+      // Reset to the default t1 state immediately
+      mymap.flyTo(t1coor, defaultZoom, { duration: 0 });
+    }
   },
   offset: '60%',
 });
 
+// Waypoint for t2
 new Waypoint({
   element: document.getElementById('t2'),
   handler: direction => {
+    activeWaypoint = 't2'; // Set active waypoint
+    clearAllTimeouts(); // Clear timeouts from other waypoints
+
     if (direction === 'down') {
       $('.imagebox').fadeTo(300, 0, function() {
+        if (activeWaypoint !== 't2') return;
         $(this).css('background-image', img_t2).fadeTo(300, 1);
       });
     } else {
       $('.imagebox').fadeOut(300, function() {
+        if (activeWaypoint !== 't2') return;
         $(this).css('background-image', 'url("")');
       });
     }
@@ -416,31 +438,40 @@ new Waypoint({
   offset: offsetVal,
 });
 
+// Waypoint for t3
 new Waypoint({
   element: document.getElementById('t3'),
   handler: direction => {
+    activeWaypoint = 't3'; // Set active waypoint
+    clearAllTimeouts(); // Clear timeouts from other waypoints
+
     if (direction === 'down') {
       $('.imagebox').fadeOut(300, function() {
+        if (activeWaypoint !== 't3') return;
         $(this).css('background-image', 'url("")');
       });
-      setTimeout(function() {
-        mymap.flyTo(t3coor, t3Zoom, {
-        duration: flyTime
-      });
+
+      timeout1 = setTimeout(function() {
+        if (activeWaypoint !== 't3') return;
+        mymap.flyTo(t3coor, t3Zoom, { duration: flyTime });
       }, 1000);
-      setTimeout(function() {
+
+      timeout2 = setTimeout(function() {
+        if (activeWaypoint !== 't3') return;
         $('.imagebox2').fadeIn(300, function() {
           $(this).css('background-image', 'url("./img/t3.jpg")');
         });
       }, 3000);
     } else {
-      mymap.flyTo(t1coor, defaultZoom, {
-        duration: flyTime
-      });
+      mymap.flyTo(t1coor, defaultZoom, { duration: 0 });
+
       $('.imagebox').fadeTo(300, 0, function() {
+        if (activeWaypoint !== 't3') return;
         $(this).css('background-image', img_t2).fadeTo(300, 1);
       });
+
       $('.imagebox2').fadeOut(300, function() {
+        if (activeWaypoint !== 't3') return;
         $(this).css('background-image', 'url("")');
       });
     }
@@ -448,29 +479,39 @@ new Waypoint({
   offset: offsetVal,
 });
 
+// Waypoint for t4
 new Waypoint({
   element: document.getElementById('t4'),
   handler: direction => {
+    activeWaypoint = 't4'; // Set active waypoint
+    clearAllTimeouts(); // Clear timeouts from other waypoints
+
     if (direction === 'down') {
       $('.imagebox2').fadeOut(300, function() {
+        if (activeWaypoint !== 't4') return;
         $(this).css('background-image', 'url("")');
       });
-      mymap.flyTo(t4coor, t4Zoom, {
-        duration: flyTime
-      });
-      setTimeout(function() {
+ 
+    if (activeWaypoint !== 't4') return;
+    mymap.flyTo(t4coor, t4Zoom, { duration: flyTime });
+
+      timeout2 = setTimeout(function() {
+        if (activeWaypoint !== 't4') return;
         $('.imagebox2').fadeIn(300, function() {
           $(this).css('background-image', 'url("./img/t4.jpg")');
         });
       }, 2000);
     } else {
-      mymap.flyTo(t3coor, t3Zoom, {
-        duration: flyTime
-      });
       $('.imagebox2').fadeOut(300, function() {
+        if (activeWaypoint !== 't4') return;
         $(this).css('background-image', 'url("")');
       });
-      setTimeout(function() {
+
+    if (activeWaypoint !== 't4') return;
+    mymap.flyTo(t3coor, t3Zoom, { duration: flyTime });
+      
+      timeout2 = setTimeout(function() {
+        if (activeWaypoint !== 't4') return;
         $('.imagebox2').fadeIn(300, function() {
           $(this).css('background-image', 'url("./img/t3.jpg")');
         });
@@ -480,29 +521,39 @@ new Waypoint({
   offset: offsetVal,
 });
 
+// Waypoint for t5
 new Waypoint({
   element: document.getElementById('t5'),
   handler: direction => {
+    activeWaypoint = 't5'; // Set active waypoint
+    clearAllTimeouts(); // Clear timeouts from other waypoints
+
     if (direction === 'down') {
       $('.imagebox2').fadeOut(300, function() {
+        if (activeWaypoint !== 't5') return;
         $(this).css('background-image', 'url("")');
       });
-      mymap.flyTo(t5coor, t5Zoom, {
-        duration: flyTime
-      });
-      setTimeout(function() {
+
+    if (activeWaypoint !== 't5') return;
+    mymap.flyTo(t5coor, t5Zoom, { duration: flyTime }); 
+
+      timeout2 = setTimeout(function() {
+        if (activeWaypoint !== 't5') return;
         $('.imagebox2').fadeIn(300, function() {
           $(this).css('background-image', 'url("./img/t5.jpg")');
         });
       }, 2000);
     } else {
-      mymap.flyTo(t4coor, t4Zoom, {
-        duration: flyTime
-      });
       $('.imagebox2').fadeOut(300, function() {
+        if (activeWaypoint !== 't5') return;
         $(this).css('background-image', 'url("")');
       });
-      setTimeout(function() {
+      
+    if (activeWaypoint !== 't5') return;
+    mymap.flyTo(t4coor, t4Zoom, { duration: flyTime });
+
+      timeout2 = setTimeout(function() {
+        if (activeWaypoint !== 't5') return;
         $('.imagebox2').fadeIn(300, function() {
           $(this).css('background-image', 'url("./img/t4.jpg")');
         });
@@ -512,29 +563,39 @@ new Waypoint({
   offset: offsetVal,
 });
 
+// Waypoint for t6
 new Waypoint({
   element: document.getElementById('t6'),
   handler: direction => {
+    activeWaypoint = 't6'; // Set active waypoint
+    clearAllTimeouts(); // Clear timeouts from other waypoints
+
     if (direction === 'down') {
       $('.imagebox2').fadeOut(300, function() {
+        if (activeWaypoint !== 't6') return;
         $(this).css('background-image', 'url("")');
       });
-      mymap.flyTo(t6coor, t6Zoom, {
-        duration: flyTime
-      });
-      setTimeout(function() {
+      
+    if (activeWaypoint !== 't6') return;
+    mymap.flyTo(t6coor, t6Zoom, { duration: flyTime });
+
+      timeout2 = setTimeout(function() {
+        if (activeWaypoint !== 't6') return;
         $('.imagebox2').fadeIn(300, function() {
           $(this).css('background-image', 'url("./img/t6.jpg")');
         });
       }, 2000);
     } else {
-      mymap.flyTo(t5coor, t5Zoom, {
-        duration: flyTime
-      });
       $('.imagebox2').fadeOut(300, function() {
+        if (activeWaypoint !== 't6') return;
         $(this).css('background-image', 'url("")');
       });
-      setTimeout(function() {
+
+    if (activeWaypoint !== 't6') return;
+    mymap.flyTo(t5coor, t5Zoom, { duration: flyTime });
+
+      timeout2 = setTimeout(function() {
+        if (activeWaypoint !== 't6') return;
         $('.imagebox2').fadeIn(300, function() {
           $(this).css('background-image', 'url("./img/t5.jpg")');
         });
@@ -544,39 +605,65 @@ new Waypoint({
   offset: offsetVal,
 });
 
+// Waypoint for t7
 new Waypoint({
   element: document.getElementById('t7'),
   handler: direction => {
+    activeWaypoint = 't7'; // Set active waypoint
+    clearAllTimeouts(); // Clear timeouts from other waypoints
+
     if (direction === 'down') {
-      $('.imagebox2').fadeOut(300);
-      $('.imagebox').fadeTo(300, 0, function() {
+      $('.imagebox2').fadeOut(300, function() {
+        if (activeWaypoint !== 't7') return;
+        $(this).css('background-image', 'url("")');
+      });
+
+    if (activeWaypoint !== 't7') return;
+    $('.imagebox').fadeTo(300, 0, function() {
+        if (activeWaypoint !== 't7') return;
         $('.imagebox').addClass('max_width');
         $(this).css('background-image', img_t7).fadeTo(300, 1);
-      });
-      $('.mapbox').fadeOut(300);
+    });
+    
+    if (activeWaypoint !== 't7') return;
+    $('.mapbox').fadeOut(300);
+      
     } else {
       $('.imagebox').fadeOut(300, function() {
+        if (activeWaypoint !== 't7') return;
         $('.imagebox').removeClass('max_width');
         $(this).css('background-image', 'url("")');
       });
-      $('.mapbox').fadeIn(300);
-      $('.imagebox2').fadeIn(300);
+
+    if (activeWaypoint !== 't7') return;
+    $('.mapbox').fadeIn(300);
+
+    if (activeWaypoint !== 't7') return;
+    $('.imagebox2').fadeIn(300, function() {
+        $(this).css('background-image', 'url("./img/t6.jpg")');
+    });
+
     }
   },
   offset: offsetVal,
 });
 
+// Waypoint for t8
 new Waypoint({
   element: document.getElementById('t8'),
   handler: direction => {
+    activeWaypoint = 't8'; // Set active waypoint
+    clearAllTimeouts(); // Clear any previous timeouts
+
     if (direction === 'down') {
       $('.imagebox').fadeTo(300, 0, function() {
+        if (activeWaypoint !== 't8') return;
         $('.imagebox').removeClass('max_width');
         $(this).css('background-image', 'url("./img/t8.jpg")').fadeTo(300, 1);
       });
     } else {
-      
       $('.imagebox').fadeTo(300, 0, function() {
+        if (activeWaypoint !== 't8') return;
         $('.imagebox').addClass('max_width');
         $(this).css('background-image', img_t7).fadeTo(300, 1);
       });
@@ -585,15 +672,21 @@ new Waypoint({
   offset: offsetVal,
 });
 
+// Waypoint for t9
 new Waypoint({
   element: document.getElementById('t9'),
   handler: direction => {
+    activeWaypoint = 't9'; // Set active waypoint
+    clearAllTimeouts(); // Clear any previous timeouts
+
     if (direction === 'down') {
       $('.imagebox').fadeTo(300, 0, function() {
+        if (activeWaypoint !== 't9') return;
         $(this).css('background-image', 'url("./img/t9.jpg")').fadeTo(300, 1);
       });
     } else {
       $('.imagebox').fadeTo(300, 0, function() {
+        if (activeWaypoint !== 't9') return;
         $(this).css('background-image', 'url("./img/t8.jpg")').fadeTo(300, 1);
       });
     }
@@ -601,15 +694,21 @@ new Waypoint({
   offset: offsetVal,
 });
 
+// Waypoint for t10
 new Waypoint({
   element: document.getElementById('t10'),
   handler: direction => {
+    activeWaypoint = 't10'; // Set active waypoint
+    clearAllTimeouts(); // Clear any previous timeouts
+
     if (direction === 'down') {
       $('.imagebox').fadeTo(300, 0, function() {
+        if (activeWaypoint !== 't10') return;
         $(this).css('background-image', 'url("./img/t10.jpg")').fadeTo(300, 1);
       });
     } else {
       $('.imagebox').fadeTo(300, 0, function() {
+        if (activeWaypoint !== 't10') return;
         $(this).css('background-image', 'url("./img/t9.jpg")').fadeTo(300, 1);
       });
     }
@@ -617,15 +716,21 @@ new Waypoint({
   offset: offsetVal,
 });
 
+// Waypoint for t11
 new Waypoint({
   element: document.getElementById('t11'),
   handler: direction => {
+    activeWaypoint = 't11'; // Set active waypoint
+    clearAllTimeouts(); // Clear any previous timeouts
+
     if (direction === 'down') {
       $('.imagebox').fadeTo(300, 0, function() {
+        if (activeWaypoint !== 't11') return;
         $(this).css('background-image', 'url("./img/t11.jpg")').fadeTo(300, 1);
       });
     } else {
       $('.imagebox').fadeTo(300, 0, function() {
+        if (activeWaypoint !== 't11') return;
         $(this).css('background-image', 'url("./img/t10.jpg")').fadeTo(300, 1);
       });
     }
